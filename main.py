@@ -4,16 +4,23 @@ import xml.etree.ElementTree as ET
 import os
 from os.path import expanduser
 from crontabs import Cron, Tab
-
+import ConfigParser
 
 
 api_url = 'https://www.namesilo.com/api/'
 
+Config = ConfigParser.ConfigParser()
+Config.read("ddns.conf")
+
+api_key = Config.get("common", 'api_key')
+host_name = Config.get("common", 'host_name')
+domain_name = Config.get("common", 'domain_name')
+rrhost = Config.get("common", 'rrhost')
 
 def update():
 
     real_ip = json.loads(urllib2.urlopen("http://v4.ipv6-test.com/api/myip.php?json").read())['address']
-    print(real_ip)
+    print('your wan ip is: ' + real_ip)
 
     home_dir = expanduser("~")
     filename = os.path.join(home_dir, ".namesilo_cache.json")
@@ -24,7 +31,7 @@ def update():
             try:
                 cache_ip = json.loads(f.read()).get('address')
             except Exception as e:
-                print e
+                print(e)
             f.close()
 
     if cache_ip != real_ip:
@@ -41,7 +48,7 @@ def update():
         req = urllib2.Request(api_url + 'dnsUpdateRecord?version=1&type=xml&key=' + api_key + '&domain=' + domain_name +
             '&rrid=' + record_id + '&rrhost=' + rrhost + '&rrvalue=' + real_ip + '&rrttl=7207', headers={'User-Agent': "Magic Browser"})
 
-        print urllib2.urlopen(req).read()
+        print(urllib2.urlopen(req).read())
 
         with open(filename, 'w+') as f:
             f.write(json.dumps({

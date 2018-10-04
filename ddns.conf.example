@@ -1,0 +1,5 @@
+[common]
+api_key = 1234567890abcdef1234
+host_name = test.example.com
+domain_name = example.com
+rrhost = test
