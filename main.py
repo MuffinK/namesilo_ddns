@@ -17,6 +17,11 @@ host_name = Config.get("common", 'host_name')
 domain_name = Config.get("common", 'domain_name')
 rrhost = Config.get("common", 'rrhost')
 
+try:
+    time_interval = Config.getint('common', 'time_interval', 20)
+except Exception as e :
+    time_interval = 20
+
 def update():
 
     real_ip = json.loads(urllib2.urlopen("http://v4.ipv6-test.com/api/myip.php?json").read())['address']
@@ -59,5 +64,5 @@ def update():
         print('ip not change')
 update()
 Cron().schedule(
-    Tab(name='run_my_job').every(minutes=20).run(update)
+    Tab(name='run_my_job').every(minutes=time_interval).run(update)
 ).go()
