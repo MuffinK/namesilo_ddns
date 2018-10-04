@@ -22,6 +22,7 @@ try:
 except Exception as e :
     time_interval = 20
 
+
 def update():
 
     real_ip = json.loads(urllib2.urlopen("http://v4.ipv6-test.com/api/myip.php?json").read())['address']

@@ -10,6 +10,19 @@ ddns for namesilo using python2 or docker on linux, mac or windows
 5. python main.py
 
 ### or using docker
-1. 
+1. edit ddns.conf
+
+```apacheconf
+[common]
+api_key = 1234567890abcdef1234
+host_name = test.example.com
+domain_name = example.com
+rrhost = test
+#time_interval = 20 #Optional
+```
+2. run
+```bash
+docker run --name namesilo_ddns --rm -v $(pwd)/ddns.conf:/app/ddns.conf -d namesilo_ddns:latest
+```
 
 it will update domain dns recode to your ip every 20(can be configed) minutes
