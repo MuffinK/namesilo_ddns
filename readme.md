@@ -22,7 +22,7 @@ rrhost = test
 ```
 2. run
 ```bash
-docker run --name namesilo_ddns --rm -v $(pwd)/ddns.conf:/app/ddns.conf -d namesilo_ddns:latest
+docker run --name namesilo_ddns --rm -v $(pwd)/ddns.conf:/app/ddns.conf -d muffinking/namesilo_ddns:latest
 ```
 
 it will update domain dns recode to your ip every 20(can be configed) minutes
